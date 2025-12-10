@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { writeFile, mkdir } from 'fs/promises';
-import { existsSync } from 'fs';
-import path from 'path';
+import { put } from '@vercel/blob';
 
 export async function POST(request: NextRequest) {
     try {
@@ -23,26 +21,47 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: 'File too large (max 5MB)' }, { status: 400 });
         }
 
-        const bytes = await file.arrayBuffer();
-        const buffer = Buffer.from(bytes);
+        // Check if running on Vercel
+        const isVercel = process.env.VERCEL === '1' || process.env.VERCEL_ENV !== undefined;
 
-        // Create uploads directory if not exists
-        const uploadDir = path.join(process.cwd(), 'public', 'uploads');
-        if (!existsSync(uploadDir)) {
-            await mkdir(uploadDir, { recursive: true });
+        if (isVercel && process.env.BLOB_READ_WRITE_TOKEN) {
+            // Use Vercel Blob storage in production
+            const blob = await put(file.name, file, {
+                access: 'public',
+                token: process.env.BLOB_READ_WRITE_TOKEN,
+            });
+
+            return NextResponse.json({
+                url: blob.url,
+                message: 'Upload successful'
+            });
+        } else {
+            // Local development - use local file system
+            const { writeFile, mkdir } = await import('fs/promises');
+            const { existsSync } = await import('fs');
+            const path = await import('path');
+
+            const bytes = await file.arrayBuffer();
+            const buffer = Buffer.from(bytes);
+
+            // Create uploads directory if not exists
+            const uploadDir = path.join(process.cwd(), 'public', 'uploads');
+            if (!existsSync(uploadDir)) {
+                await mkdir(uploadDir, { recursive: true });
+            }
+
+            // Generate unique filename
+            const ext = file.name.split('.').pop();
+            const filename = `avatar_${Date.now()}_${Math.random().toString(36).substr(2, 9)}.${ext}`;
+            const filepath = path.join(uploadDir, filename);
+
+            await writeFile(filepath, buffer);
+
+            return NextResponse.json({
+                url: `/uploads/${filename}`,
+                message: 'Upload successful'
+            });
         }
-
-        // Generate unique filename
-        const ext = file.name.split('.').pop();
-        const filename = `avatar_${Date.now()}_${Math.random().toString(36).substr(2, 9)}.${ext}`;
-        const filepath = path.join(uploadDir, filename);
-
-        await writeFile(filepath, buffer);
-
-        return NextResponse.json({
-            url: `/uploads/${filename}`,
-            message: 'Upload successful'
-        });
     } catch (error) {
         console.error('Upload error:', error);
         return NextResponse.json({ error: 'Upload failed' }, { status: 500 });
