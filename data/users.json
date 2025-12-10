@@ -1,0 +1,26 @@
+{
+  "users": [
+    {
+      "id": "user_1765359333062_ylkvsx61k",
+      "username": "daovinhkhang0834@gma",
+      "password": "c068b43082ae2817c2c8fba708f09432d033fb3b37d2d3b2e83d0cd9ea51f97b",
+      "displayName": "Khang Trai Đẹp",
+      "createdAt": "2025-12-10T09:35:33.063Z"
+    },
+    {
+      "id": "user_1765359574064_w976d8ntd",
+      "username": "daovinhkhang0834",
+      "password": "c068b43082ae2817c2c8fba708f09432d033fb3b37d2d3b2e83d0cd9ea51f97b",
+      "displayName": "Khang Nè",
+      "createdAt": "2025-12-10T09:39:34.064Z"
+    },
+    {
+      "id": "user_1765359873360_fuh69sn5z",
+      "username": "daovinhkhang08341",
+      "password": "a320480f534776bddb5cdb54b1e93d210a3c7d199e80a23c1b2178497b184c76",
+      "displayName": "khangdeptrai",
+      "avatar": "/uploads/avatar_1765359871558_uv9a1cx2o.jpeg",
+      "createdAt": "2025-12-10T09:44:33.361Z"
+    }
+  ]
+}

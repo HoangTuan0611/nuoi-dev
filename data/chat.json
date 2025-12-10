@@ -1,0 +1,60 @@
+{
+  "messages": [
+    {
+      "id": "msg_1765359530273_pesch7bun",
+      "userId": "user_1765359333062_ylkvsx61k",
+      "senderName": "Khang Trai Đẹp",
+      "message": "hi",
+      "createdAt": "2025-12-10T09:38:50.273Z"
+    },
+    {
+      "id": "msg_1765359586775_cl6kbehzw",
+      "userId": "user_1765359574064_w976d8ntd",
+      "senderName": "Khang Nè",
+      "message": "chào bẹn",
+      "createdAt": "2025-12-10T09:39:46.775Z"
+    },
+    {
+      "id": "msg_1765360006046_e7tj266wq",
+      "userId": "user_1765359873360_fuh69sn5z",
+      "senderName": "khangdeptrai",
+      "message": "hi",
+      "createdAt": "2025-12-10T09:46:46.046Z"
+    },
+    {
+      "id": "msg_1765360006655_lid9tdumo",
+      "userId": "user_1765359873360_fuh69sn5z",
+      "senderName": "khangdeptrai",
+      "message": "hihih",
+      "createdAt": "2025-12-10T09:46:46.655Z"
+    },
+    {
+      "id": "msg_1765360007379_i91qitw6a",
+      "userId": "user_1765359873360_fuh69sn5z",
+      "senderName": "khangdeptrai",
+      "message": "hihi",
+      "createdAt": "2025-12-10T09:46:47.379Z"
+    },
+    {
+      "id": "msg_1765360008190_h8oryeada",
+      "userId": "user_1765359873360_fuh69sn5z",
+      "senderName": "khangdeptrai",
+      "message": "hiihh",
+      "createdAt": "2025-12-10T09:46:48.190Z"
+    },
+    {
+      "id": "msg_1765360009011_l37o8ztud",
+      "userId": "user_1765359873360_fuh69sn5z",
+      "senderName": "khangdeptrai",
+      "message": "hih",
+      "createdAt": "2025-12-10T09:46:49.011Z"
+    },
+    {
+      "id": "msg_1765360009687_j4zakzlim",
+      "userId": "user_1765359873360_fuh69sn5z",
+      "senderName": "khangdeptrai",
+      "message": "ihih",
+      "createdAt": "2025-12-10T09:46:49.687Z"
+    }
+  ]
+}

@@ -1,0 +1,274 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.avatarSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    padding: 28px;
+    background: linear-gradient(145deg, #fff8f2, #fff);
+    border-radius: 18px;
+    border: 2px dashed rgba(255, 140, 0, 0.3);
+}
+
+.avatarPreview {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: linear-gradient(135deg, #ff8c00, #ffa500);
+    padding: 4px;
+    box-shadow: 0 6px 25px rgba(255, 140, 0, 0.25);
+    transition: transform 0.3s ease;
+}
+
+.avatarPreview:hover {
+    transform: scale(1.03);
+}
+
+.avatarPreview img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #fff;
+}
+
+.avatarPlaceholder {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    font-size: 0.85rem;
+}
+
+.fileInput {
+    display: none;
+}
+
+.uploadBtn {
+    padding: 11px 22px;
+    background: linear-gradient(135deg, #ff8c00, #ff6b00);
+    color: #fff;
+    border: none;
+    border-radius: 11px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.uploadBtn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(255, 140, 0, 0.4);
+}
+
+.uploadBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.uploadHint {
+    color: #999;
+    font-size: 0.8rem;
+    margin: 0;
+}
+
+/* Gallery Section */
+.gallerySection {
+    padding: 24px;
+    background: #fafafa;
+    border-radius: 16px;
+    border: 1px solid #eee;
+}
+
+.sectionTitle {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #333;
+    margin: 0 0 6px;
+}
+
+.sectionHint {
+    font-size: 0.85rem;
+    color: #888;
+    margin: 0 0 16px;
+}
+
+.galleryGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.galleryItem {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 2px solid rgba(255, 140, 0, 0.2);
+}
+
+.galleryItem img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.removeGalleryBtn {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 24px;
+    height: 24px;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    font-size: 0.7rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.removeGalleryBtn:hover {
+    background: #e53935;
+}
+
+.addGalleryItem {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.addGalleryBtn {
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    border: 2px dashed #ddd;
+    border-radius: 12px;
+    color: #888;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.addGalleryBtn:hover:not(:disabled) {
+    border-color: #ff8c00;
+    color: #ff8c00;
+    background: #fff5eb;
+}
+
+.addGalleryBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.formGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+@media (max-width: 640px) {
+    .formGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .galleryGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.field.fullWidth {
+    grid-column: 1 / -1;
+}
+
+.label {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.input,
+.select,
+.textarea {
+    padding: 13px 16px;
+    border: 2px solid #eee;
+    border-radius: 11px;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    background: #fff;
+    font-family: inherit;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+    outline: none;
+    border-color: #ff8c00;
+    box-shadow: 0 0 0 4px rgba(255, 140, 0, 0.1);
+}
+
+.input::placeholder,
+.textarea::placeholder {
+    color: #aaa;
+}
+
+.select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ff8c00' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 18px;
+    padding-right: 42px;
+}
+
+.textarea {
+    resize: vertical;
+    min-height: 95px;
+}
+
+.submitBtn {
+    padding: 15px 30px;
+    background: linear-gradient(135deg, #ff8c00, #ff6b00);
+    color: #fff;
+    border: none;
+    border-radius: 13px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    align-self: center;
+    min-width: 190px;
+}
+
+.submitBtn:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 22px rgba(255, 140, 0, 0.4);
+}
+
+.submitBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}

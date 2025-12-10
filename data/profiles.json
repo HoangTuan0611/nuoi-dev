@@ -1,0 +1,34 @@
+{
+  "profiles": [
+    {
+      "id": "profile_1765357737058_uzpdmvr20",
+      "name": "Khang",
+      "nickname": "bé nhột",
+      "avatar": "/uploads/avatar_1765356625617_hqso1ff8f.jpeg",
+      "bio": "cậu bé",
+      "skills": [
+        "ngầu"
+      ],
+      "funFacts": [
+        "omg"
+      ],
+      "catchphrase": "Tất cả tại ",
+      "mood": "coffee",
+      "level": 1,
+      "xp": 0,
+      "achievements": [
+        {
+          "id": "first_login",
+          "title": "Người Mới",
+          "description": "Gia nhập Nuôi DEV",
+          "unlockedAt": "2025-12-10T09:08:57.058Z"
+        }
+      ],
+      "socialLinks": [],
+      "createdAt": "2025-12-10T09:08:57.058Z",
+      "updatedAt": "2025-12-10T09:35:18.981Z",
+      "votes": 1,
+      "rank": "bronze"
+    }
+  ]
+}

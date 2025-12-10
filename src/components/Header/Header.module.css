@@ -1,0 +1,222 @@
+.header {
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 140, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 10px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+}
+
+.logoText {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #333;
+}
+
+.logoDev {
+    font-size: 1.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ff8c00, #ff6b00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.nav {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.navLink {
+    padding: 8px 14px;
+    color: #666;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+    white-space: nowrap;
+}
+
+.navLink:hover {
+    color: #ff8c00;
+    background: rgba(255, 140, 0, 0.08);
+}
+
+.navLink.active {
+    color: #ff8c00;
+    background: rgba(255, 140, 0, 0.12);
+}
+
+.authSection {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.loading {
+    color: #999;
+}
+
+.userMenu {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.userProfile {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    padding: 5px 12px 5px 5px;
+    background: linear-gradient(135deg, #fff5eb, #fff);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 140, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.userProfile:hover {
+    border-color: #ff8c00;
+    box-shadow: 0 2px 10px rgba(255, 140, 0, 0.15);
+}
+
+.userAvatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ff8c00;
+}
+
+.avatarPlaceholder {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff8c00, #ff6b00);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.username {
+    font-weight: 600;
+    color: #333;
+    font-size: 0.9rem;
+}
+
+.logoutBtn {
+    padding: 6px 14px;
+    background: #f5f5f5;
+    color: #666;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.logoutBtn:hover {
+    background: #eee;
+    color: #333;
+}
+
+.authButtons {
+    display: flex;
+    gap: 8px;
+}
+
+.loginBtn {
+    padding: 8px 16px;
+    color: #ff8c00;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.loginBtn:hover {
+    background: rgba(255, 140, 0, 0.08);
+}
+
+.registerBtn {
+    padding: 8px 16px;
+    background: linear-gradient(135deg, #ff8c00, #ff6b00);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.registerBtn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 140, 0, 0.3);
+}
+
+@media (max-width: 900px) {
+    .container {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .nav {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .username {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .navLink {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+    }
+
+    .loginBtn,
+    .registerBtn {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
+}
