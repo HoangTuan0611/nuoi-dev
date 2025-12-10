@@ -4,14 +4,14 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './page.module.css';
 import ProfileForm from '@/components/ProfileForm';
-import { CreateProfileDTO } from '@/types/profile';
+import { CreateProfileDTO, UpdateProfileDTO } from '@/types/profile';
 
 export default function CreateProfilePage() {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
 
-    const handleSubmit = async (data: CreateProfileDTO) => {
+    const handleSubmit = async (data: CreateProfileDTO | UpdateProfileDTO) => {
         setIsLoading(true);
         setError('');
 

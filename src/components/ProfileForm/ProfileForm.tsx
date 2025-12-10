@@ -239,7 +239,7 @@ export default function ProfileForm({ profile, onSubmit, isLoading }: ProfileFor
                     <label className={styles.label}>Tâm trạng</label>
                     <select
                         value={formData.mood}
-                        onChange={(e) => setFormData({ ...formData, mood: e.target.value })}
+                        onChange={(e) => setFormData({ ...formData, mood: e.target.value as Profile['mood'] })}
                         className={styles.select}
                     >
                         {moodOptions.map((option) => (
