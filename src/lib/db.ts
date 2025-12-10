@@ -1,113 +1,83 @@
-// Hybrid database: Vercel KV for production, JSON files for local dev
+// Simple in-memory database with JSON file persistence
 import { Profile, User, Post, ChatMessage, Vote, Rank, Comment } from '@/types/profile';
 import crypto from 'crypto';
+import fs from 'fs';
+import path from 'path';
 
-// Check if running on Vercel (serverless)
-const isVercel = process.env.VERCEL === '1' || process.env.VERCEL_ENV !== undefined;
+const DATA_DIR = path.join(process.cwd(), 'data');
 
-// Vercel KV client (only imported in production)
-let kv: any = null;
-if (isVercel) {
-    try {
-        kv = require('@vercel/kv').kv;
-    } catch (e) {
-        console.warn('Vercel KV not available, using in-memory fallback');
-    }
-}
+// In-memory cache for fast access
+const memoryCache = new Map<string, any>();
+let cacheInitialized = false;
 
-// In-memory cache for development/fallback
-const memoryStore = new Map<string, any>();
-
-// Local file storage for development
-let fs: any = null;
-let path: any = null;
-if (!isVercel) {
-    fs = require('fs');
-    path = require('path');
-}
-
-const DATA_DIR = isVercel ? '' : require('path').join(process.cwd(), 'data');
-
-// Ensure data directory exists (local only)
+// Ensure data directory exists
 function ensureDataDir() {
-    if (!isVercel && fs && !fs.existsSync(DATA_DIR)) {
+    if (!fs.existsSync(DATA_DIR)) {
         fs.mkdirSync(DATA_DIR, { recursive: true });
     }
 }
 
 function getFilePath(name: string): string {
-    if (!path) return '';
     return path.join(DATA_DIR, `${name}.json`);
 }
 
-// Read data from KV or local file
-async function readDataAsync<T>(name: string, defaultValue: T): Promise<T> {
-    if (isVercel && kv) {
-        try {
-            const data = await kv.get(name);
-            return data || defaultValue;
-        } catch (e) {
-            console.error('KV read error:', e);
-            return memoryStore.get(name) || defaultValue;
+// Initialize cache from files on first use
+function initializeCache() {
+    if (cacheInitialized) return;
+    
+    ensureDataDir();
+    const files = ['profiles', 'users', 'posts', 'chat', 'votes'];
+    
+    for (const file of files) {
+        const filePath = getFilePath(file);
+        if (fs.existsSync(filePath)) {
+            try {
+                const data = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+                memoryCache.set(file, data);
+            } catch (e) {
+                console.error(`Error loading ${file}:`, e);
+            }
         }
-    } else if (fs) {
-        ensureDataDir();
-        const filePath = getFilePath(name);
-        if (!fs.existsSync(filePath)) {
-            fs.writeFileSync(filePath, JSON.stringify(defaultValue, null, 2));
-            return defaultValue;
-        }
-        const data = fs.readFileSync(filePath, 'utf-8');
-        return JSON.parse(data);
     }
-    return memoryStore.get(name) || defaultValue;
+    
+    cacheInitialized = true;
 }
 
-// Synchronous wrapper (uses cached data)
 function readData<T>(name: string, defaultValue: T): T {
-    if (isVercel) {
-        return memoryStore.get(name) || defaultValue;
-    } else if (fs) {
-        ensureDataDir();
-        const filePath = getFilePath(name);
-        if (!fs.existsSync(filePath)) {
-            fs.writeFileSync(filePath, JSON.stringify(defaultValue, null, 2));
-            return defaultValue;
-        }
-        const data = fs.readFileSync(filePath, 'utf-8');
-        return JSON.parse(data);
+    initializeCache();
+    
+    if (memoryCache.has(name)) {
+        return memoryCache.get(name);
     }
-    return defaultValue;
-}
-
-// Write data to KV or local file
-async function writeDataAsync<T>(name: string, data: T): Promise<void> {
-    if (isVercel && kv) {
-        try {
-            await kv.set(name, data);
-            memoryStore.set(name, data);
-        } catch (e) {
-            console.error('KV write error:', e);
-            memoryStore.set(name, data);
-        }
-    } else if (fs) {
-        ensureDataDir();
-        fs.writeFileSync(getFilePath(name), JSON.stringify(data, null, 2));
-    } else {
-        memoryStore.set(name, data);
+    
+    ensureDataDir();
+    const filePath = getFilePath(name);
+    
+    if (!fs.existsSync(filePath)) {
+        fs.writeFileSync(filePath, JSON.stringify(defaultValue, null, 2));
+        memoryCache.set(name, defaultValue);
+        return defaultValue;
+    }
+    
+    try {
+        const data = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+        memoryCache.set(name, data);
+        return data;
+    } catch (e) {
+        console.error(`Error reading ${name}:`, e);
+        memoryCache.set(name, defaultValue);
+        return defaultValue;
     }
 }
 
 function writeData<T>(name: string, data: T): void {
-    if (isVercel) {
-        memoryStore.set(name, data);
-        // Async write in background
-        writeDataAsync(name, data).catch(e => console.error('Background write error:', e));
-    } else if (fs) {
-        ensureDataDir();
+    ensureDataDir();
+    memoryCache.set(name, data);
+    
+    try {
         fs.writeFileSync(getFilePath(name), JSON.stringify(data, null, 2));
-    } else {
-        memoryStore.set(name, data);
+    } catch (e) {
+        console.error(`Error writing ${name}:`, e);
     }
 }
 

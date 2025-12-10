@@ -1,6 +1,6 @@
 # Deployment Guide - Vercel
 
-This guide explains how to deploy the Nuôi DEV application to Vercel with proper storage configuration.
+This guide explains how to deploy the Nuôi DEV application to Vercel.
 
 ## Prerequisites
 
@@ -8,30 +8,28 @@ This guide explains how to deploy the Nuôi DEV application to Vercel with prope
 - GitHub repository connected to Vercel
 - A Cloudinary account (free tier available at https://cloudinary.com)
 
+## Important Note About Data Persistence
+
+⚠️ **This app uses local JSON file storage which is ephemeral on Vercel's serverless environment.**
+
+- Data will **reset on each deployment** or when the serverless function goes idle
+- For production use with persistent data, you should integrate a database:
+  - **MongoDB Atlas** (recommended - free tier available)
+  - **Supabase PostgreSQL** (free tier available)
+  - **Vercel Postgres** (paid)
+  - **PlanetScale MySQL** (free tier available)
+
+This current setup is suitable for:
+- Development and testing
+- Demo applications
+- Proof of concepts
+- Applications where data persistence is not critical
+
 ## Storage Setup
 
-The application uses two storage solutions:
+### Cloudinary - For Image Uploads
 
-### 1. Vercel KV (Redis) - For Data Storage
-
-Stores all application data (users, profiles, posts, chat messages, votes).
-
-**Setup Steps:**
-
-1. Go to your Vercel project dashboard
-2. Navigate to the **Storage** tab
-3. Click **Create Database** → Select **KV**
-4. Name it (e.g., `nuoi-dev-kv`)
-5. Click **Create**
-6. Vercel will automatically add environment variables to your project:
-   - `KV_URL`
-   - `KV_REST_API_URL`
-   - `KV_REST_API_TOKEN`
-   - `KV_REST_API_READ_ONLY_TOKEN`
-
-### 2. Cloudinary - For Image Uploads
-
-Stores uploaded images (avatars, gallery images).
+Stores uploaded images (avatars, gallery images) permanently.
 
 **Setup Steps:**
 

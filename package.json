@@ -6,13 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint",
-    "migrate-to-kv": "node scripts/migrate-to-kv.mjs"
+    "lint": "eslint"
   },
   "dependencies": {
     "@cloudinary/url-gen": "^1.20.0",
-    "@vercel/blob": "^0.24.1",
-    "@vercel/kv": "^3.0.0",
     "cloudinary": "^2.5.1",
     "crypto-js": "^4.2.0",
     "next": "16.0.8",
