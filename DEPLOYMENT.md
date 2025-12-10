@@ -6,10 +6,11 @@ This guide explains how to deploy the Nuôi DEV application to Vercel with prope
 
 - A Vercel account
 - GitHub repository connected to Vercel
+- A Cloudinary account (free tier available at https://cloudinary.com)
 
 ## Storage Setup
 
-The application uses two Vercel storage solutions:
+The application uses two storage solutions:
 
 ### 1. Vercel KV (Redis) - For Data Storage
 
@@ -28,19 +29,22 @@ Stores all application data (users, profiles, posts, chat messages, votes).
    - `KV_REST_API_TOKEN`
    - `KV_REST_API_READ_ONLY_TOKEN`
 
-### 2. Vercel Blob - For File Uploads
+### 2. Cloudinary - For Image Uploads
 
 Stores uploaded images (avatars, gallery images).
 
 **Setup Steps:**
 
-1. In your Vercel project dashboard
-2. Go to **Storage** tab
-3. Click **Create Database** → Select **Blob**
-4. Name it (e.g., `nuoi-dev-blob`)
-5. Click **Create**
-6. Vercel will automatically add environment variables:
-   - `BLOB_READ_WRITE_TOKEN`
+1. Go to [Cloudinary](https://cloudinary.com) and create a free account
+2. From your Cloudinary dashboard, copy:
+   - **Cloud Name**
+   - **API Key**
+   - **API Secret**
+3. In your Vercel project dashboard, go to **Settings** → **Environment Variables**
+4. Add these environment variables:
+   - `CLOUDINARY_CLOUD_NAME` = your cloud name
+   - `CLOUDINARY_API_KEY` = your API key
+   - `CLOUDINARY_API_SECRET` = your API secret
 
 ## Deployment Steps
 
@@ -83,8 +87,10 @@ After setting up storage, verify these environment variables exist in your Verce
 - `KV_REST_API_TOKEN`
 - `KV_REST_API_READ_ONLY_TOKEN`
 
-**Vercel Blob:**
-- `BLOB_READ_WRITE_TOKEN`
+**Cloudinary:**
+- `CLOUDINARY_CLOUD_NAME`
+- `CLOUDINARY_API_KEY`
+- `CLOUDINARY_API_SECRET`
 
 **System (Auto-set):**
 - `VERCEL=1`
@@ -107,7 +113,9 @@ KV_URL=your_kv_url
 KV_REST_API_URL=your_rest_api_url
 KV_REST_API_TOKEN=your_token
 KV_REST_API_READ_ONLY_TOKEN=your_readonly_token
-BLOB_READ_WRITE_TOKEN=your_blob_token
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
 VERCEL=1
 ```
 
@@ -144,14 +152,26 @@ npm run migrate-to-kv
 - The environment variables will be added automatically
 
 **Error: "BLOB_READ_WRITE_TOKEN is not set"**
-- Solution: Create a Vercel Blob store in your project
-- The environment variable will be added automatically
+- Solution: This error is now obsolete - the app uses Cloudinary for image uploads
+- Make sure Cloudinary environment variables are set instead
+
+**Error: "Upload failed" or Cloudinary errors**
+- Solution: Verify your Cloudinary credentials in environment variables
+- Check that your Cloudinary account is active
+- Ensure you haven't exceeded free tier limits
 
 ### Data Not Persisting
 
 - Check Vercel KV dashboard to see if data is being written
 - Verify environment variables are set in Vercel project settings
 - Check deployment logs for errors
+
+### Images Not Uploading
+
+- Check Cloudinary dashboard to see if images are being uploaded
+- Verify Cloudinary credentials in environment variables
+- Check browser console and server logs for errors
+- Ensure file size is under 5MB
 
 ## Local Development
 
@@ -167,12 +187,12 @@ Data will be stored in `/data/*.json` files when running locally.
 
 ### Production (Vercel)
 - **Data Storage**: Vercel KV (Redis)
-- **File Storage**: Vercel Blob
+- **File Storage**: Cloudinary
 - **Compute**: Serverless Functions
 
 ### Local Development
 - **Data Storage**: Local JSON files (`/data/*.json`)
-- **File Storage**: Local filesystem (`/public/uploads/`)
+- **File Storage**: Cloudinary (using credentials from .env.local)
 - **Compute**: Next.js Dev Server
 
 ## Support
@@ -186,5 +206,5 @@ For issues:
 ## Resources
 
 - [Vercel KV Documentation](https://vercel.com/docs/storage/vercel-kv)
-- [Vercel Blob Documentation](https://vercel.com/docs/storage/vercel-blob)
+- [Cloudinary Documentation](https://cloudinary.com/documentation)
 - [Next.js Deployment](https://nextjs.org/docs/deployment)
